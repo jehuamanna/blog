@@ -30,10 +30,6 @@ function accession(date: Date) {
 			Computer programming notes from the workbench: small experiments, practical fixes, and
 			things learned while taking software apart.
 		</p>
-		<div class="social-links" aria-label="Social links">
-			<a href="https://x.com/jehuamanna" rel="me noreferrer">X</a>
-			<a href="https://www.linkedin.com/in/jehuamanna/" rel="me noreferrer">LinkedIn</a>
-		</div>
 	</section>
 
 	{
@@ -67,7 +63,9 @@ function accession(date: Date) {
 						{post.data.tags.length > 0 && (
 							<ul class="tags">
 								{post.data.tags.map((tag) => (
-									<li>#{tag}</li>
+									<li>
+										<a href={`/tags/${tag}/`}>#{tag}</a>
+									</li>
 								))}
 							</ul>
 						)}

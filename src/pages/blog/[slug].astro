@@ -25,6 +25,7 @@ function accession(date: Date) {
 <BaseLayout title={post.data.title} description={post.data.description}>
 	<article class="article">
 		<header class="article-header">
+			<a class="back-link" href="/">&larr; Archive</a>
 			<div class="entry-head">
 				<p class="eyebrow">Fragment</p>
 				<p class="accession">{accession(post.data.pubDate)}</p>
@@ -38,6 +39,15 @@ function accession(date: Date) {
 					year: 'numeric',
 				})}
 			</time>
+			{post.data.tags.length > 0 && (
+				<ul class="tags">
+					{post.data.tags.map((tag) => (
+						<li>
+							<a href={`/tags/${tag}/`}>#{tag}</a>
+						</li>
+					))}
+				</ul>
+			)}
 		</header>
 		<div class="article-content">
 			<Content />
