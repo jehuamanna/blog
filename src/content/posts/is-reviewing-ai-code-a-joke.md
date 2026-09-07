@@ -1,6 +1,6 @@
 ---
 title: Is reviewing AI code a joke?
-description: Is it possible to review huge code output by AI for each prompt.
+description: Is it possible to review huge code output by AI for each prompt?
 pubDate: 2026-09-07
 tags:
   - code-reviews
