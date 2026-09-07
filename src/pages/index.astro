@@ -1,0 +1,69 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const posts = (await getCollection('posts'))
+	.filter((post) => !post.data.draft)
+	.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+
+const featuredPost = posts[0];
+const remainingPosts = posts.slice(1);
+---
+
+<BaseLayout title="brokentablets" description="Computer programming notes by Jehu Amanna, a tinkerer.">
+	<section class="intro" aria-labelledby="intro-title">
+		<p class="eyebrow">Jehu Amanna · Tinkerer</p>
+		<h1 id="intro-title">brokentablets</h1>
+		<p>
+			Computer programming notes from the workbench: small experiments, practical fixes, and things learned while taking software apart.
+		</p>
+		<div class="social-links" aria-label="Social links">
+			<a href="https://x.com/jehuamanna" rel="me noreferrer">X</a>
+			<a href="https://www.linkedin.com/in/jehuamanna/" rel="me noreferrer">LinkedIn</a>
+		</div>
+	</section>
+
+	{
+		featuredPost && (
+			<section class="featured" aria-labelledby="featured-title">
+				<div>
+					<p class="eyebrow">Latest</p>
+					<h2 id="featured-title">
+						<a href={`/blog/${featuredPost.id}/`}>{featuredPost.data.title}</a>
+					</h2>
+					<p>{featuredPost.data.description}</p>
+				</div>
+				<time datetime={featuredPost.data.pubDate.toISOString()}>
+					{featuredPost.data.pubDate.toLocaleDateString('en', {
+						month: 'short',
+						day: 'numeric',
+						year: 'numeric',
+					})}
+				</time>
+			</section>
+		)
+	}
+
+	<section class="post-list" aria-labelledby="all-posts-title">
+		<h2 id="all-posts-title">All Posts</h2>
+		<ul>
+			{
+				remainingPosts.map((post) => (
+					<li>
+						<a href={`/blog/${post.id}/`}>
+							<span>{post.data.title}</span>
+							<time datetime={post.data.pubDate.toISOString()}>
+								{post.data.pubDate.toLocaleDateString('en', {
+									month: 'short',
+									day: 'numeric',
+									year: 'numeric',
+								})}
+							</time>
+						</a>
+						<p>{post.data.description}</p>
+					</li>
+				))
+			}
+		</ul>
+	</section>
+</BaseLayout>
